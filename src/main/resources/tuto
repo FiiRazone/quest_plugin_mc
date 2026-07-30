@@ -1,0 +1,127 @@
+(fait)
+
+1) Commande /quete
+
+Créer une commande :
+/quete
+Elle ouvre un GUI avec les quêtes disponibles.
+Exemple :
+§8Quêtes
+[Diamant]
+Miner 10 diamants
+Récompense : 500$
+[Zombie]
+Tuer 20 zombies
+Récompense : 1 clé
+
+
+-----------------------------------------------------------------------
+2) Système de progression
+
+Quand un joueur fait une action :
+
+Miner un diamant → +1 progression
+Tuer un zombie → +1 progression
+
+Exemple :
+
+§aQuête Diamant : 7/10
+
+Utilise des Events :
+
+BlockBreakEvent
+EntityDeathEvent
+3) Sauvegarde des joueurs
+
+Créer un fichier :
+
+plugins/Test/players/
+
+Avec un fichier par joueur :
+
+uuid.yml
+
+Exemple :
+
+quetes:
+  diamant:
+    progression: 7
+    terminee: false
+
+  zombie:
+    progression: 20
+    terminee: true
+
+Utilise :
+
+YamlConfiguration
+4) Récompenses
+
+Quand une quête est terminée :
+
+Message :
+
+§aFélicitations !
+§7Tu as terminé la quête Diamant.
+
+Donner une récompense :
+
+Argent (tu peux simuler avec un message au début)
+Item
+XP
+
+Exemple :
+
+player.getInventory().addItem(
+    new ItemStack(Material.DIAMOND, 5)
+);
+5) Permissions
+
+Ajouter :
+
+quetes.admin
+
+Commande :
+
+/quete reset <joueur>
+
+qui remet les quêtes à zéro.
+
+6) Configuration
+
+Créer :
+
+config.yml
+
+Avec :
+
+quetes:
+  diamant:
+    objectif: 10
+    recompense:
+      item: DIAMOND
+      quantité: 5
+
+  zombie:
+    objectif: 20
+Organisation conseillée
+
+Ton plugin devrait ressembler à ça :
+
+me.FiRazone.test
+
+commands/
+ └── QueteCommand.java
+
+events/
+ ├── BlockBreakListener.java
+ └── EntityKillListener.java
+
+menus/
+ └── QueteMenu.java
+
+manager/
+ ├── QuestManager.java
+ └── PlayerDataManager.java
+
+Test.java

@@ -1,0 +1,11 @@
+me\FiRazone\quest\Quest.class
+me\FiRazone\quest\manager\PlayerDataManager.class
+me\FiRazone\quest\menus\MenuClickListener.class
+me\FiRazone\quest\manager\MiningQuest.class
+me\FiRazone\quest\menus\MenuClickListener$1.class
+me\FiRazone\quest\commands\QueteCommand.class
+me\FiRazone\quest\menus\QueteMenu.class
+me\FiRazone\quest\manager\QuestConfigLoader.class
+me\FiRazone\quest\events\EntityKillListener.class
+me\FiRazone\quest\events\BlockBreakListener.class
+me\FiRazone\quest\manager\QuestManager.class

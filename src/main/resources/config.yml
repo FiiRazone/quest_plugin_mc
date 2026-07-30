@@ -1,0 +1,27 @@
+mining-quests:
+  diamant:
+    material: DIAMOND_ORE
+    objectif: 10
+    recompense:
+      material: DIAMOND
+      amount: 5
+    message-progression: "§aProgression diamant : %progression%/%objectif%"
+    message-terminee: "§6Quête terminée ! Tu as miné %objectif% diamants !"
+
+  or:
+    material: GOLD_ORE
+    objectif: 5
+    recompense:
+      material: GOLD_INGOT
+      amount: 5
+    message-progression: "§aProgression or : %progression%/%objectif%"
+    message-terminee: "§6Quête terminée ! Tu as miné %objectif% or !"
+
+  fer:
+    material: IRON_ORE
+    objectif: 5
+    recompense:
+      material: IRON_INGOT
+      amount: 5
+    message-progression: "§aProgression fer : %progression%/%objectif%"
+    message-terminee: "§6Quête terminée ! Tu as miné %objectif% fer !"

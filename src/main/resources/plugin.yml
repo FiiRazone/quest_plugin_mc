@@ -1,0 +1,12 @@
+name: quest
+version: '${version}'
+
+main: me.FiRazone.quest.Quest
+api-version: '26.1'
+
+author: FiRazone
+
+commands:
+  quetes:
+    description: Ouvrir le menu quêtes
+    aliases: [quest, qt]

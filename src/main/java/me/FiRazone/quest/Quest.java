@@ -49,7 +49,7 @@ public final class Quest extends JavaPlugin {
         // MESSAGE DANS LA CONSOLE POUR DIRE QUE LE PLUGIN A CHARGER
         // getLogger() = le logger officiel du plugin, affiche un message
         // dans la console du serveur avec le préfixe du plugin
-        getLogger().info("Le plugin est charger");
+        getLogger().info("Le plugin est chargerr");
 
 
         //CHARGER LES COMMANDES

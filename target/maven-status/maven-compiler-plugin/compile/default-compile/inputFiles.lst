@@ -1,6 +1,7 @@
 C:\Users\kylia\IdeaProjects\quest\src\main\java\me\FiRazone\quest\commands\QueteCommand.java
 C:\Users\kylia\IdeaProjects\quest\src\main\java\me\FiRazone\quest\events\BlockBreakListener.java
 C:\Users\kylia\IdeaProjects\quest\src\main\java\me\FiRazone\quest\events\EntityKillListener.java
+C:\Users\kylia\IdeaProjects\quest\src\main\java\me\FiRazone\quest\manager\FarmingQuest.java
 C:\Users\kylia\IdeaProjects\quest\src\main\java\me\FiRazone\quest\manager\MiningQuest.java
 C:\Users\kylia\IdeaProjects\quest\src\main\java\me\FiRazone\quest\manager\PlayerDataManager.java
 C:\Users\kylia\IdeaProjects\quest\src\main\java\me\FiRazone\quest\manager\QuestConfigLoader.java

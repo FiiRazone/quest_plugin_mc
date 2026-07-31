@@ -1,5 +1,6 @@
 package me.FiRazone.quest.menus;
 
+import me.FiRazone.quest.manager.FarmingQuest;
 import me.FiRazone.quest.manager.MiningQuest;
 import me.FiRazone.quest.manager.QuestManager;
 import org.bukkit.Bukkit;
@@ -17,10 +18,12 @@ public class QueteMenu {
 
     private final QuestManager questManager;
     private final List<MiningQuest> miningQuests;
+    private  final List<FarmingQuest> farmingQuests;
 
-    public QueteMenu(QuestManager questManager, List<MiningQuest> miningQuests) {
+    public QueteMenu(QuestManager questManager, List<MiningQuest> miningQuests, List<FarmingQuest> farmingQuests) {
         this.questManager = questManager;
         this.miningQuests = miningQuests;
+        this.farmingQuests = farmingQuests;
     }
 
     // --- MENU PRINCIPAL (Choix de la catégorie) ---
@@ -106,13 +109,39 @@ public class QueteMenu {
     public void openFarmingMenu(Player player) {
         Inventory inv = Bukkit.createInventory(null, 27, "§8Quêtes : Farming");
 
-        ItemStack sampleCrop = new ItemStack(Material.WHEAT);
-        ItemMeta meta = sampleCrop.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(ChatColor.YELLOW + "Quête Blé");
-            sampleCrop.setItemMeta(meta);
+        int slot = 10;
+        for (FarmingQuest quete : farmingQuests) {
+            ItemStack item = new ItemStack(quete.getMaterial());
+            ItemMeta meta = item.getItemMeta();
+
+            if (meta != null) {
+                meta.setDisplayName(ChatColor.GREEN + "Quête : " + quete.getNom());
+
+                int progression = questManager.getProgression(player.getUniqueId(), quete.getNom());
+                boolean isTerminee = questManager.isTerminee(player.getUniqueId(), quete.getNom());
+
+                List<String> lore = new ArrayList<>();
+                lore.add("");
+                lore.add("§7Objectif : Farming " + quete.getObjectif() + " " + quete.getNom());
+                lore.add("");
+
+                if (isTerminee) {
+                    lore.add("§a✔ Quête terminée !");
+                } else {
+                    lore.add("§eProgression : §f" + progression + "/" + quete.getObjectif());
+                }
+
+                lore.add("");
+                lore.add("§aRécompense : §f" + quete.getRecompense().getAmount() + "x " + quete.getRecompense().getType());
+
+                meta.setLore(lore);
+                item.setItemMeta(meta);
+            }
+
+            inv.setItem(slot, item);
+            slot += 2;
+            if (slot >= 27) break;
         }
-        inv.setItem(13, sampleCrop);
 
         // Ajout du bouton de retour au slot 18 (en bas à gauche)
         addBackButton(inv);

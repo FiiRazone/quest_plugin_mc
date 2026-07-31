@@ -25,3 +25,13 @@ mining-quests:
       amount: 5
     message-progression: "§aProgression fer : %progression%/%objectif%"
     message-terminee: "§6Quête terminée ! Tu as miné %objectif% fer !"
+
+farming-quests:
+  ble:
+    material: WHEAT_SEEDS
+    objectif: 5
+    recompense:
+      material: DIAMOND
+      amount: 5
+    message-progression: "§aProgression ble : %progression%/%objectif%"
+    message-terminee: "§6Quête terminée ! Tu as récolté %objectif% ble !"

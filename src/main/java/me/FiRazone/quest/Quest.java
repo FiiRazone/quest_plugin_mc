@@ -3,15 +3,12 @@ package me.FiRazone.quest;
 import me.FiRazone.quest.commands.QueteCommand;
 import me.FiRazone.quest.events.BlockBreakListener;
 import me.FiRazone.quest.events.EntityKillListener;
-import me.FiRazone.quest.manager.MiningQuest;
-import me.FiRazone.quest.manager.PlayerDataManager;
-import me.FiRazone.quest.manager.QuestConfigLoader;
-import me.FiRazone.quest.manager.QuestManager;
+import me.FiRazone.quest.manager.*;
 import me.FiRazone.quest.menus.MenuClickListener;
 import me.FiRazone.quest.menus.QueteMenu;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.List;
+import java.util.Objects;
 
 
 // Classe principale du plugin : c'est le "point d'entrée" que Bukkit charge
@@ -20,7 +17,6 @@ import java.util.List;
 // "final" = cette classe ne peut pas être héritée par une autre classe
 public final class Quest extends JavaPlugin {
 
-
     // onEnable() est appelée automatiquement par Bukkit quand le plugin démarre
     // (au lancement du serveur, ou avec /reload)
     @Override
@@ -28,7 +24,7 @@ public final class Quest extends JavaPlugin {
 
         saveDefaultConfig();
 
-        List<MiningQuest> miningQuests = new QuestConfigLoader(this).loadMiningQuests();
+        QuestConfigLoader configLoader = new QuestConfigLoader(this);
         PlayerDataManager playerDataManager = new PlayerDataManager(this);
         QuestManager questManager = new QuestManager(playerDataManager);
 
@@ -36,15 +32,24 @@ public final class Quest extends JavaPlugin {
         // avant même onEnable()), UNE SEULE instance de BlockBreakListener.
         // C'est cette instance UNIQUE qui sera utilisée PARTOUT dans le plugin,
         // pour éviter le bug qu'on a corrigé (deux Map différentes = incohérence)
-        BlockBreakListener blockBreakListener = new BlockBreakListener(questManager, miningQuests);
+        BlockBreakListener blockBreakListener = new BlockBreakListener(
+                questManager,
+                configLoader.getMiningQuests(),
+                configLoader.getFarmingQuests()
+        );
         EntityKillListener entityKillListener = new EntityKillListener(questManager);
 
         // On crée aussi ICI l'instance de QueteMenu, en lui passant directement
         // la même instance "blockBreakListener" créée juste au-dessus.
         // Comme ça, QueteMenu et le futur registerEvents() partageront
         // exactement la même Map de progression.
-        QueteMenu queteMenu = new QueteMenu(questManager, miningQuests);
-        getLogger().info(miningQuests.size() + " quêtes de minage chargées depuis config.yml");
+        QueteMenu queteMenu = new QueteMenu(
+                questManager,
+                configLoader.getMiningQuests(),
+                configLoader.getFarmingQuests()
+        );
+        getLogger().info(configLoader.getMiningQuests().size() + " quêtes de minage chargées.");
+        getLogger().info(configLoader.getFarmingQuests().size() + " quêtes de farming chargées.");
 
         // MESSAGE DANS LA CONSOLE POUR DIRE QUE LE PLUGIN A CHARGER
         // getLogger() = le logger officiel du plugin, affiche un message
@@ -58,7 +63,7 @@ public final class Quest extends JavaPlugin {
         // .setExecutor(...) associe cette commande à une classe qui va
         // la gérer : ici, un NOUVEL objet QueteCommand, à qui on passe
         // notre instance unique "queteMenu" (créée plus haut)
-        getCommand("quetes").setExecutor(new QueteCommand(queteMenu, questManager));
+        Objects.requireNonNull(getCommand("quetes")).setExecutor(new QueteCommand(queteMenu, questManager));
 
         //CHARGER LES EVENTS
         // On enregistre "blockBreakListener" (notre instance unique, PAS un "new")
